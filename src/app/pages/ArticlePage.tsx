@@ -2,12 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router';
 import { motion } from 'motion/react';
 import {
-  Clock, Eye, Heart, Share2, Bookmark, Twitter,
+  Clock, Heart, Share2, Bookmark, Twitter,
   Linkedin, Link2, ChevronRight, MessageSquare, ThumbsUp,
   ArrowLeft, Info, Lightbulb, AlertTriangle,
 } from 'lucide-react';
 import { BlogCard } from '../components/BlogCard';
-import { articles, getAuthor, getCategory, getRelatedArticles, comments, formatDate, formatViews, ContentBlock } from '../data/mockData';
+import { articles, getAuthor, getCategory, getRelatedArticles, comments, formatDate, ContentBlock } from '../data/mockData';
+
+const HEADING_FONT = "'Times New Roman', Georgia, serif";
 
 function CodeBlock({ code, language }: { code: string; language: string }) {
   const [copied, setCopied] = useState(false);
@@ -18,7 +20,7 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
   };
   return (
     <div className="my-8 rounded-2xl overflow-hidden border border-border">
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#1a1a2e] border-b border-white/10">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-[#1a1a1a] border-b border-white/10">
         <span className="text-xs text-white/50 font-mono">{language}</span>
         <button
           onClick={copy}
@@ -27,9 +29,9 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
           {copied ? 'Copied!' : 'Copy'}
         </button>
       </div>
-      <pre className="p-6 bg-[#0d0d1a] overflow-x-auto">
+      <pre className="p-6 bg-[#0d0d0d] overflow-x-auto">
         <code
-          className="text-sm text-[#a8b5d9] leading-relaxed"
+          className="text-sm text-[#c8c8c8] leading-relaxed"
           style={{ fontFamily: "'JetBrains Mono', monospace" }}
         >
           {code}
@@ -41,10 +43,10 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
 
 function BlockQuote({ text, attribution }: { text: string; attribution?: string }) {
   return (
-    <blockquote className="my-8 pl-6 border-l-4 border-primary">
+    <blockquote className="my-8 pl-6 border-l-4 border-foreground/30">
       <p
         className="text-foreground italic leading-relaxed mb-2"
-        style={{ fontSize: '1.15rem', fontFamily: "'Space Grotesk', sans-serif" }}
+        style={{ fontSize: '1.15rem', fontFamily: HEADING_FONT }}
       >
         "{text}"
       </p>
@@ -57,9 +59,9 @@ function BlockQuote({ text, attribution }: { text: string; attribution?: string 
 
 function Callout({ text, variant }: { text: string; variant: 'info' | 'tip' | 'warning' }) {
   const map = {
-    info: { Icon: Info, bg: 'bg-blue-50 dark:bg-blue-950/40', border: 'border-blue-200 dark:border-blue-800', text: 'text-blue-800 dark:text-blue-200', label: 'Note' },
-    tip: { Icon: Lightbulb, bg: 'bg-emerald-50 dark:bg-emerald-950/40', border: 'border-emerald-200 dark:border-emerald-800', text: 'text-emerald-800 dark:text-emerald-200', label: 'Tip' },
-    warning: { Icon: AlertTriangle, bg: 'bg-amber-50 dark:bg-amber-950/40', border: 'border-amber-200 dark:border-amber-800', text: 'text-amber-800 dark:text-amber-200', label: 'Warning' },
+    info: { Icon: Info, bg: 'bg-muted', border: 'border-border', text: 'text-foreground', label: 'Note' },
+    tip: { Icon: Lightbulb, bg: 'bg-muted', border: 'border-border', text: 'text-foreground', label: 'Tip' },
+    warning: { Icon: AlertTriangle, bg: 'bg-muted', border: 'border-border', text: 'text-foreground', label: 'Warning' },
   };
   const { Icon, bg, border, text: textColor, label } = map[variant];
   return (
@@ -88,7 +90,7 @@ function renderContent(blocks: ContentBlock[]) {
             key={i}
             id={block.id}
             className="text-foreground mt-14 mb-5"
-            style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.65rem', letterSpacing: '-0.02em', scrollMarginTop: '5rem' }}
+            style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1.65rem', scrollMarginTop: '5rem' }}
           >
             {block.text}
           </h2>
@@ -99,7 +101,7 @@ function renderContent(blocks: ContentBlock[]) {
             key={i}
             id={block.id}
             className="text-foreground mt-10 mb-4"
-            style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '1.25rem', letterSpacing: '-0.01em', scrollMarginTop: '5rem' }}
+            style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1.25rem', scrollMarginTop: '5rem' }}
           >
             {block.text}
           </h3>
@@ -133,7 +135,7 @@ function renderContent(blocks: ContentBlock[]) {
           <ul key={i} className="list-none ml-0 mb-6 space-y-2">
             {block.items.map((item, j) => (
               <li key={j} className="flex gap-3 text-foreground leading-relaxed" style={{ fontSize: '1.0625rem' }}>
-                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-foreground/40 shrink-0" />
                 {item}
               </li>
             ))}
@@ -224,16 +226,13 @@ export function ArticlePage() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 pb-20">
           {/* Main content */}
           <main>
-            {/* Category + meta */}
+            {/* Category meta */}
             <div className="flex flex-wrap items-center gap-2 mb-5">
-              <span
-                className="text-xs px-3 py-1.5 rounded-full font-semibold"
-                style={{ background: category.color + '18', color: category.color }}
-              >
+              <span className="text-xs px-3 py-1.5 rounded-full font-medium bg-muted text-muted-foreground">
                 {category.name}
               </span>
               {article.isTrending && (
-                <span className="text-xs px-3 py-1.5 rounded-full bg-orange-50 text-orange-600 dark:bg-orange-950 dark:text-orange-400 font-medium">
+                <span className="text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground font-medium">
                   Trending
                 </span>
               )}
@@ -243,10 +242,9 @@ export function ArticlePage() {
             <h1
               className="text-foreground mb-6"
               style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontWeight: 800,
+                fontFamily: HEADING_FONT,
+                fontWeight: 700,
                 fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
-                letterSpacing: '-0.03em',
                 lineHeight: 1.15,
               }}
             >
@@ -255,7 +253,7 @@ export function ArticlePage() {
 
             {/* Lead */}
             <p
-              className="text-muted-foreground mb-8 leading-relaxed border-l-4 border-primary/30 pl-5"
+              className="text-muted-foreground mb-8 leading-relaxed border-l-4 border-foreground/20 pl-5"
               style={{ fontSize: '1.1rem' }}
             >
               {article.excerpt}
@@ -267,8 +265,8 @@ export function ArticlePage() {
                 <img src={author.avatar} alt={author.name} className="w-12 h-12 rounded-full object-cover border-2 border-border" />
                 <div>
                   <p
-                    className="text-foreground group-hover:text-primary transition-colors"
-                    style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
+                    className="text-foreground group-hover:text-foreground/60 transition-colors"
+                    style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600 }}
                   >
                     {author.name}
                   </p>
@@ -279,7 +277,6 @@ export function ArticlePage() {
               <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
                 <span>{formatDate(article.publishedAt)}</span>
                 <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{article.readingTime} min read</span>
-                <span className="flex items-center gap-1.5"><Eye className="w-4 h-4" />{formatViews(article.views)} views</span>
               </div>
             </div>
 
@@ -292,7 +289,7 @@ export function ArticlePage() {
                   <p className="text-muted-foreground">Full article content is available in the featured article.</p>
                   <Link
                     to={`/articles/${articles[0].slug}`}
-                    className="inline-block mt-4 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors"
+                    className="inline-block mt-4 px-5 py-2.5 bg-foreground text-background rounded-xl text-sm font-medium hover:bg-foreground/80 transition-colors"
                   >
                     Read Featured Article
                   </Link>
@@ -321,7 +318,7 @@ export function ArticlePage() {
                   onClick={handleLike}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     liked
-                      ? 'bg-red-50 text-red-500 dark:bg-red-950/40'
+                      ? 'bg-foreground text-background'
                       : 'bg-muted text-muted-foreground hover:text-foreground'
                   }`}
                 >
@@ -333,7 +330,7 @@ export function ArticlePage() {
                   onClick={() => setBookmarked(v => !v)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     bookmarked
-                      ? 'bg-primary/10 text-primary'
+                      ? 'bg-foreground text-background'
                       : 'bg-muted text-muted-foreground hover:text-foreground'
                   }`}
                 >
@@ -385,16 +382,16 @@ export function ArticlePage() {
               <div>
                 <Link
                   to={`/authors/${author.slug}`}
-                  className="inline-block text-foreground hover:text-primary transition-colors mb-1"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.1rem' }}
+                  className="inline-block text-foreground hover:text-foreground/60 transition-colors mb-1"
+                  style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1.1rem' }}
                 >
                   {author.name}
                 </Link>
-                <p className="text-sm text-primary font-medium mb-3">{author.role}</p>
+                <p className="text-sm text-muted-foreground font-medium mb-3">{author.role}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">{author.bio}</p>
                 <Link
                   to={`/authors/${author.slug}`}
-                  className="inline-flex items-center gap-1.5 mt-4 text-sm text-primary font-medium hover:text-primary/80 group transition-colors"
+                  className="inline-flex items-center gap-1.5 mt-4 text-sm text-foreground font-medium hover:text-muted-foreground group transition-colors"
                 >
                   View all articles <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
@@ -405,7 +402,7 @@ export function ArticlePage() {
             <div className="mt-14">
               <h2
                 className="text-foreground mb-6 flex items-center gap-2"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.4rem' }}
+                style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1.4rem' }}
               >
                 <MessageSquare className="w-5 h-5" />
                 Discussion ({comments.length})
@@ -420,7 +417,7 @@ export function ArticlePage() {
                         <div className="flex items-center gap-2 mb-2">
                           <span
                             className="text-foreground"
-                            style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '0.9rem' }}
+                            style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem' }}
                           >
                             {comment.authorName}
                           </span>
@@ -440,17 +437,17 @@ export function ArticlePage() {
               <div className="bg-card border border-border rounded-2xl p-5">
                 <p
                   className="text-foreground mb-3"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '0.95rem' }}
+                  style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.95rem' }}
                 >
                   Leave a comment
                 </p>
                 <textarea
                   placeholder="Share your thoughts…"
                   rows={3}
-                  className="w-full bg-muted border-0 rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/30 resize-none transition-all"
+                  className="w-full bg-muted border-0 rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-foreground/20 resize-none transition-all"
                 />
                 <div className="flex justify-end mt-3">
-                  <button className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors">
+                  <button className="px-5 py-2.5 bg-foreground text-background rounded-xl text-sm font-medium hover:bg-foreground/80 transition-colors">
                     Post comment
                   </button>
                 </div>
@@ -465,7 +462,7 @@ export function ArticlePage() {
                 <div className="bg-card border border-border rounded-2xl p-5 mb-6">
                   <p
                     className="text-foreground mb-4"
-                    style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}
+                    style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}
                   >
                     Table of Contents
                   </p>
@@ -476,7 +473,7 @@ export function ArticlePage() {
                         href={`#${item.id}`}
                         className={`block py-1.5 px-3 rounded-lg text-sm transition-all duration-150 leading-snug ${
                           activeToc === item.id
-                            ? 'text-primary bg-accent font-medium'
+                            ? 'text-foreground bg-muted font-medium'
                             : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                         } ${item.level === 3 ? 'pl-6' : ''}`}
                       >
@@ -490,7 +487,7 @@ export function ArticlePage() {
                 <div className="bg-card border border-border rounded-2xl p-5">
                   <p
                     className="text-foreground mb-4"
-                    style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}
+                    style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}
                   >
                     Share
                   </p>
@@ -527,7 +524,7 @@ export function ArticlePage() {
           <section className="pb-20 border-t border-border pt-16">
             <h2
               className="text-foreground mb-8"
-              style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.5rem', letterSpacing: '-0.02em' }}
+              style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1.5rem' }}
             >
               Continue Reading
             </h2>

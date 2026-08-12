@@ -67,17 +67,17 @@ export interface Article {
 export const authors: Author[] = [
   {
     id: 'a1',
-    slug: 'alex-chen',
-    name: 'Alex Chen',
+    slug: 'om-karmuse',
+    name: 'Om Karmuse',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&auto=format',
     role: 'AI Engineer & Technical Writer',
     bio: 'Building the future of AI at the intersection of research and product. 7 years at DeepMind, now independent.',
-    longBio: "Alex Chen is an AI Engineer and technical writer with over a decade of experience building large-scale machine learning systems. He spent seven years at DeepMind working on reinforcement learning and language models before going independent to write and consult. Alex is passionate about making complex AI concepts accessible to engineers and curious minds alike. His writing has been read by over 2 million people, and he is a frequent speaker at NeurIPS and ICLR. When he's not writing, he's training models, hiking in the Pacific Northwest, or brewing pour-over coffee.",
+    longBio: "Om Karmuse is an AI Engineer and technical writer with over a decade of experience building large-scale machine learning systems. He spent seven years at DeepMind working on reinforcement learning and language models before going independent to write and consult. Om is passionate about making complex AI concepts accessible to engineers and curious minds alike. His writing has been read by over 2 million people, and he is a frequent speaker at NeurIPS and ICLR. When he's not writing, he's training models, hiking in the Pacific Northwest, or brewing pour-over coffee.",
     social: {
-      twitter: 'alexchen_ai',
-      github: 'alexchen',
-      linkedin: 'alex-chen-ai',
-      website: 'alexchen.dev',
+      twitter: 'omkarmuse',
+      github: 'omkarmuse',
+      linkedin: 'om-karmuse',
+      website: 'omkarmuse.dev',
     },
     stats: { posts: 84, views: '2.4M', followers: '38K' },
   },
@@ -129,14 +129,14 @@ export const authors: Author[] = [
 ];
 
 export const categories: Category[] = [
-  { id: 'c1', slug: 'artificial-intelligence', name: 'Artificial Intelligence', icon: '🤖', description: 'LLMs, neural networks, and the frontier of AI research.', count: 34, color: '#4F46E5' },
-  { id: 'c2', slug: 'programming', name: 'Programming', icon: '💻', description: 'Clean code, architecture, and engineering best practices.', count: 51, color: '#10B981' },
-  { id: 'c3', slug: 'technology', name: 'Technology', icon: '⚡', description: 'Cloud, infrastructure, dev tools, and the tech industry.', count: 28, color: '#06B6D4' },
-  { id: 'c4', slug: 'machine-learning', name: 'Machine Learning', icon: '📊', description: 'Practical ML from training to deployment at scale.', count: 42, color: '#F59E0B' },
-  { id: 'c5', slug: 'personal', name: 'Personal', icon: '✍️', description: 'Career reflections, lessons learned, and creative essays.', count: 19, color: '#EC4899' },
-  { id: 'c6', slug: 'open-source', name: 'Open Source', icon: '🔓', description: 'Contributing, maintaining, and building in the open.', count: 16, color: '#8B5CF6' },
-  { id: 'c7', slug: 'web-development', name: 'Web Development', icon: '🌐', description: 'React, TypeScript, CSS, and the modern web stack.', count: 38, color: '#EF4444' },
-  { id: 'c8', slug: 'ethics', name: 'AI Ethics', icon: '⚖️', description: 'Alignment, fairness, and the societal impact of AI.', count: 11, color: '#64748B' },
+  { id: 'c1', slug: 'artificial-intelligence', name: 'Artificial Intelligence', icon: '🤖', description: 'LLMs, neural networks, and the frontier of AI research.', count: 34, color: '#1A1A1A' },
+  { id: 'c2', slug: 'programming', name: 'Programming', icon: '💻', description: 'Clean code, architecture, and engineering best practices.', count: 51, color: '#2D2D2D' },
+  { id: 'c3', slug: 'technology', name: 'Technology', icon: '⚡', description: 'Cloud, infrastructure, dev tools, and the tech industry.', count: 28, color: '#404040' },
+  { id: 'c4', slug: 'machine-learning', name: 'Machine Learning', icon: '📊', description: 'Practical ML from training to deployment at scale.', count: 42, color: '#525252' },
+  { id: 'c5', slug: 'personal', name: 'Personal', icon: '✍️', description: 'Career reflections, lessons learned, and creative essays.', count: 19, color: '#404040' },
+  { id: 'c6', slug: 'open-source', name: 'Open Source', icon: '🔓', description: 'Contributing, maintaining, and building in the open.', count: 16, color: '#525252' },
+  { id: 'c7', slug: 'web-development', name: 'Web Development', icon: '🌐', description: 'React, TypeScript, CSS, and the modern web stack.', count: 38, color: '#2D2D2D' },
+  { id: 'c8', slug: 'ethics', name: 'AI Ethics', icon: '⚖️', description: 'Alignment, fairness, and the societal impact of AI.', count: 11, color: '#717171' },
 ];
 
 export const allTags = [

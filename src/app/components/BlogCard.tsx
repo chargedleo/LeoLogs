@@ -1,7 +1,9 @@
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
-import { Clock, Heart, Eye, ArrowRight } from 'lucide-react';
-import { Article, getAuthor, getCategory, formatDate, formatViews } from '../data/mockData';
+import { Clock, Heart, ArrowRight } from 'lucide-react';
+import { Article, getAuthor, getCategory, formatDate } from '../data/mockData';
+
+const HEADING_FONT = "'Times New Roman', Georgia, serif";
 
 interface BlogCardProps {
   article: Article;
@@ -17,10 +19,10 @@ export function BlogCard({ article, variant = 'default' }: BlogCardProps) {
       <motion.div
         whileHover={{ y: -2 }}
         transition={{ duration: 0.2 }}
-        className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-foreground/5 transition-shadow duration-300"
+        className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-md hover:shadow-foreground/5 transition-shadow duration-300"
       >
         <Link to={`/articles/${article.slug}`} className="flex flex-col sm:flex-row gap-0">
-          <div className="sm:w-64 shrink-0 overflow-hidden bg-muted">
+          <div className="sm:w-60 shrink-0 overflow-hidden bg-muted">
             <img
               src={article.coverImage}
               alt={article.title}
@@ -30,21 +32,18 @@ export function BlogCard({ article, variant = 'default' }: BlogCardProps) {
           <div className="flex flex-col justify-between p-6 flex-1">
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <span
-                  className="text-xs px-2.5 py-1 rounded-full font-medium"
-                  style={{ background: category.color + '18', color: category.color }}
-                >
+                <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-muted text-muted-foreground">
                   {category.name}
                 </span>
                 {article.isTrending && (
-                  <span className="text-xs px-2.5 py-1 rounded-full bg-orange-50 text-orange-600 dark:bg-orange-950 dark:text-orange-400 font-medium">
+                  <span className="text-xs px-2.5 py-1 rounded-full bg-foreground/8 text-foreground font-medium border border-border">
                     Trending
                   </span>
                 )}
               </div>
               <h3
-                className="text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '1.05rem', lineHeight: 1.35 }}
+                className="text-foreground mb-2 line-clamp-2 group-hover:text-foreground/70 transition-colors"
+                style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1.05rem', lineHeight: 1.35 }}
               >
                 {article.title}
               </h3>
@@ -58,10 +57,9 @@ export function BlogCard({ article, variant = 'default' }: BlogCardProps) {
                   <p className="text-xs text-muted-foreground">{formatDate(article.publishedAt)}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{article.readingTime}m</span>
-                <span className="flex items-center gap-1"><Heart className="w-3.5 h-3.5" />{article.likes}</span>
-              </div>
+              <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                <Clock className="w-3.5 h-3.5" />{article.readingTime}m
+              </span>
             </div>
           </div>
         </Link>
@@ -83,15 +81,12 @@ export function BlogCard({ article, variant = 'default' }: BlogCardProps) {
             className="w-20 h-16 rounded-xl object-cover shrink-0 bg-muted"
           />
           <div className="flex-1 min-w-0">
-            <span
-              className="text-xs font-medium mb-1 block"
-              style={{ color: category.color }}
-            >
+            <span className="text-xs font-medium mb-1 block text-muted-foreground">
               {category.name}
             </span>
             <h4
-              className="text-foreground line-clamp-2 group-hover:text-primary transition-colors mb-1"
-              style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '0.9rem', lineHeight: 1.35 }}
+              className="text-foreground line-clamp-2 group-hover:text-foreground/70 transition-colors mb-1"
+              style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '0.9rem', lineHeight: 1.35 }}
             >
               {article.title}
             </h4>
@@ -110,7 +105,7 @@ export function BlogCard({ article, variant = 'default' }: BlogCardProps) {
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
-      className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-foreground/5 transition-all duration-300 flex flex-col"
+      className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-foreground/5 transition-all duration-300 flex flex-col"
     >
       <Link to={`/articles/${article.slug}`} className="block overflow-hidden bg-muted aspect-video">
         <img
@@ -122,14 +117,11 @@ export function BlogCard({ article, variant = 'default' }: BlogCardProps) {
 
       <div className="flex flex-col flex-1 p-5">
         <div className="flex items-center gap-2 mb-3">
-          <span
-            className="text-xs px-2.5 py-1 rounded-full font-medium"
-            style={{ background: category.color + '18', color: category.color }}
-          >
+          <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-muted text-muted-foreground">
             {category.name}
           </span>
           {article.isTrending && (
-            <span className="text-xs px-2.5 py-1 rounded-full bg-orange-50 text-orange-600 dark:bg-orange-950 dark:text-orange-400 font-medium">
+            <span className="text-xs px-2.5 py-1 rounded-full border border-border text-muted-foreground font-medium">
               Trending
             </span>
           )}
@@ -137,8 +129,8 @@ export function BlogCard({ article, variant = 'default' }: BlogCardProps) {
 
         <Link to={`/articles/${article.slug}`}>
           <h3
-            className="text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors"
-            style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '1.1rem', lineHeight: 1.35 }}
+            className="text-foreground mb-2 line-clamp-2 group-hover:text-foreground/70 transition-colors"
+            style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1.1rem', lineHeight: 1.35 }}
           >
             {article.title}
           </h3>
@@ -165,17 +157,16 @@ export function BlogCard({ article, variant = 'default' }: BlogCardProps) {
             <div>
               <Link
                 to={`/authors/${author.slug}`}
-                className="text-xs font-medium text-foreground hover:text-primary transition-colors"
+                className="text-xs font-medium text-foreground hover:text-foreground/60 transition-colors"
               >
                 {author.name}
               </Link>
               <p className="text-xs text-muted-foreground">{formatDate(article.publishedAt)}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{article.readingTime}m</span>
-            <span className="flex items-center gap-1"><Eye className="w-3.5 h-3.5" />{formatViews(article.views)}</span>
-          </div>
+          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+            <Clock className="w-3.5 h-3.5" />{article.readingTime}m
+          </span>
         </div>
       </div>
     </motion.div>
@@ -199,41 +190,38 @@ export function FeaturedCard({ article }: { article: Article }) {
             alt={article.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
           <div className="absolute inset-0 p-8 flex flex-col justify-end">
             <div className="flex items-center gap-2 mb-4">
-              <span
-                className="text-xs px-3 py-1.5 rounded-full font-semibold text-white"
-                style={{ background: category.color }}
-              >
+              <span className="text-xs px-3 py-1.5 rounded-full font-semibold text-white bg-white/20 backdrop-blur-sm border border-white/15">
                 {category.name}
               </span>
-              <span className="text-xs px-3 py-1.5 rounded-full bg-white/20 text-white font-medium backdrop-blur-sm">
+              <span className="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white font-medium backdrop-blur-sm border border-white/10">
                 Featured
               </span>
             </div>
 
             <h2
               className="text-white mb-3 leading-tight"
-              style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 'clamp(1.25rem, 3vw, 2rem)', lineHeight: 1.2 }}
+              style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: 'clamp(1.25rem, 3vw, 2rem)', lineHeight: 1.2 }}
             >
               {article.title}
             </h2>
 
-            <p className="text-white/75 text-sm leading-relaxed mb-5 max-w-2xl line-clamp-2">
+            <p className="text-white/70 text-sm leading-relaxed mb-5 max-w-2xl line-clamp-2">
               {article.excerpt}
             </p>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <img src={author.avatar} alt={author.name} className="w-9 h-9 rounded-full border-2 border-white/30 object-cover" />
+                <img src={author.avatar} alt={author.name} className="w-9 h-9 rounded-full border-2 border-white/20 object-cover" />
                 <div>
                   <p className="text-sm font-semibold text-white">{author.name}</p>
-                  <p className="text-xs text-white/65">{formatDate(article.publishedAt)} · {article.readingTime} min read</p>
+                  <p className="text-xs text-white/55">{formatDate(article.publishedAt)} · {article.readingTime} min read</p>
                 </div>
               </div>
-              <div className="flex items-center gap-1.5 text-white/80 text-sm font-medium group/btn bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 transition-colors">
+              <div className="flex items-center gap-1.5 text-white/80 text-sm font-medium group/btn bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 transition-colors border border-white/10">
                 Read article
                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
               </div>

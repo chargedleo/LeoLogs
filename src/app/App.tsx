@@ -38,13 +38,13 @@ function NotFound() {
     <div className="flex flex-col items-center justify-center py-32 px-4 text-center">
       <p
         className="text-primary mb-4"
-        style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: '6rem', lineHeight: 1 }}
+        style={{ fontFamily: "'Times New Roman', Georgia, serif", fontWeight: 700, fontSize: '6rem', lineHeight: 1 }}
       >
         404
       </p>
       <h1
         className="text-foreground mb-3"
-        style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.75rem' }}
+        style={{ fontFamily: "'Times New Roman', Georgia, serif", fontWeight: 700, fontSize: '1.75rem' }}
       >
         Page not found
       </h1>

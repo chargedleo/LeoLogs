@@ -22,7 +22,7 @@ const navLinks = [
       { label: 'Personal', href: '/articles?category=personal' },
     ],
   },
-  { label: 'About', href: '/authors/alex-chen' },
+  { label: 'About', href: '/authors/om-karmuse' },
 ];
 
 export function Navbar() {
@@ -63,9 +63,9 @@ export function Navbar() {
               </div>
               <span
                 className="text-foreground"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.1rem', letterSpacing: '-0.02em' }}
+                style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 700, fontSize: '1.05rem', letterSpacing: '0.01em' }}
               >
-                devlog
+                LeoLogs
               </span>
             </Link>
 

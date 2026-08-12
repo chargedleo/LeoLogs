@@ -1,16 +1,17 @@
 import type { ElementType } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
-import { ArrowRight, TrendingUp, Zap, BookOpen, Cpu, Code2, Globe, User, PenLine } from 'lucide-react';
+import { ArrowRight, Zap, BookOpen, Cpu, Code2, Globe, User, PenLine, Hash } from 'lucide-react';
 import { BlogCard, FeaturedCard } from '../components/BlogCard';
-import { NewsletterSection } from '../components/NewsletterSection';
 import { articles, categories, authors, getAuthor } from '../data/mockData';
+
+const HEADING_FONT = "'Times New Roman', Georgia, serif";
 
 const categoryIcons: Record<string, ElementType> = {
   'artificial-intelligence': Cpu,
   'programming': Code2,
   'technology': Zap,
-  'machine-learning': TrendingUp,
+  'machine-learning': Hash,
   'personal': PenLine,
   'open-source': Globe,
   'web-development': Globe,
@@ -20,18 +21,16 @@ const categoryIcons: Record<string, ElementType> = {
 function SectionHeader({ tag, title, subtitle }: { tag: string; title: string; subtitle?: string }) {
   return (
     <div className="mb-10">
-      <span
-        className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block"
-      >
+      <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3 block">
         {tag}
       </span>
       <h2
         className="text-foreground"
-        style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 'clamp(1.5rem, 3vw, 2rem)', letterSpacing: '-0.02em' }}
+        style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}
       >
         {title}
       </h2>
-      {subtitle && <p className="text-muted-foreground mt-2 max-w-xl">{subtitle}</p>}
+      {subtitle && <p className="text-muted-foreground mt-2 max-w-xl text-sm">{subtitle}</p>}
     </div>
   );
 }
@@ -62,7 +61,7 @@ export function HomePage() {
           <SectionHeader tag="Fresh off the press" title="Latest Articles" />
           <Link
             to="/articles"
-            className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors group"
+            className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors group"
           >
             View all
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -107,18 +106,15 @@ export function HomePage() {
               >
                 <Link
                   to={`/articles?category=${cat.slug}`}
-                  className="group flex flex-col gap-3 p-5 bg-card border border-border rounded-2xl hover:border-primary/30 hover:shadow-lg hover:shadow-foreground/5 transition-all duration-200"
+                  className="group flex flex-col gap-3 p-5 bg-card border border-border rounded-2xl hover:border-foreground/30 hover:shadow-md hover:shadow-foreground/5 transition-all duration-200"
                 >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
-                    style={{ background: cat.color + '15' }}
-                  >
+                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-lg">
                     {cat.icon}
                   </div>
                   <div>
                     <h3
-                      className="text-foreground group-hover:text-primary transition-colors mb-0.5"
-                      style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '0.9rem' }}
+                      className="text-foreground group-hover:text-foreground/70 transition-colors mb-0.5"
+                      style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.875rem' }}
                     >
                       {cat.name}
                     </h3>
@@ -131,7 +127,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Trending */}
+      {/* Trending + Author sidebar */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
@@ -146,25 +142,24 @@ export function HomePage() {
                 >
                   <Link
                     to={`/articles/${article.slug}`}
-                    className="group flex items-start gap-5 py-5 border-b border-border hover:bg-muted/40 -mx-4 px-4 rounded-xl transition-colors"
+                    className="group flex items-start gap-5 py-5 border-b border-border hover:bg-muted/50 -mx-4 px-4 rounded-xl transition-colors"
                   >
                     <span
                       className="text-5xl font-black shrink-0 select-none leading-none mt-1"
                       style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontFamily: "'Times New Roman', Georgia, serif",
                         color: 'var(--border)',
-                        transition: 'color 0.2s',
                       }}
                     >
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <span className="text-xs font-medium text-primary mb-1 block">
+                      <span className="text-xs font-medium text-muted-foreground mb-1 block">
                         {categories.find(c => c.id === article.categoryId)?.name}
                       </span>
                       <h3
-                        className="text-foreground group-hover:text-primary transition-colors mb-1 line-clamp-2"
-                        style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '1rem', lineHeight: 1.35 }}
+                        className="text-foreground group-hover:text-foreground/70 transition-colors mb-1 line-clamp-2"
+                        style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1rem', lineHeight: 1.35 }}
                       >
                         {article.title}
                       </h3>
@@ -172,8 +167,6 @@ export function HomePage() {
                         <span>{getAuthor(article.authorId).name}</span>
                         <span>·</span>
                         <span>{article.readingTime} min read</span>
-                        <span>·</span>
-                        <span className="flex items-center gap-1"><TrendingUp className="w-3 h-3" />{(article.views / 1000).toFixed(1)}K views</span>
                       </p>
                     </div>
                     <img
@@ -187,7 +180,7 @@ export function HomePage() {
             </div>
           </div>
 
-          {/* Author Intro sidebar */}
+          {/* Author sidebar */}
           <div>
             <SectionHeader tag="About the author" title="Who writes here" />
             <div className="bg-card border border-border rounded-2xl p-6 sticky top-24">
@@ -198,26 +191,12 @@ export function HomePage() {
               />
               <h3
                 className="text-foreground mb-1"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.1rem' }}
+                style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1.1rem' }}
               >
                 {mainAuthor.name}
               </h3>
-              <p className="text-sm text-primary font-medium mb-3">{mainAuthor.role}</p>
+              <p className="text-sm text-muted-foreground font-medium mb-3">{mainAuthor.role}</p>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">{mainAuthor.bio}</p>
-
-              <div className="grid grid-cols-3 gap-3 mb-5">
-                {Object.entries(mainAuthor.stats).map(([key, val]) => (
-                  <div key={key} className="text-center p-2 bg-muted rounded-xl">
-                    <p
-                      className="text-foreground"
-                      style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1rem' }}
-                    >
-                      {val}
-                    </p>
-                    <p className="text-xs text-muted-foreground capitalize">{key}</p>
-                  </div>
-                ))}
-              </div>
 
               <Link
                 to={`/authors/${mainAuthor.slug}`}
@@ -230,9 +209,6 @@ export function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Newsletter */}
-      <NewsletterSection />
 
       {/* Tags */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">

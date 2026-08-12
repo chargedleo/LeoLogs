@@ -74,10 +74,10 @@ export function BlogListingPage() {
           transition={{ duration: 0.4 }}
           className="mb-10"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-primary block mb-3">The archive</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground block mb-3">The archive</span>
           <h1
             className="text-foreground mb-3"
-            style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 'clamp(2rem, 5vw, 3rem)', letterSpacing: '-0.03em' }}
+            style={{ fontFamily: "'Times New Roman', Georgia, serif", fontWeight: 700, fontSize: 'clamp(2rem, 5vw, 3rem)' }}
           >
             All Articles
           </h1>
@@ -165,7 +165,7 @@ export function BlogListingPage() {
                 {(selectedTag || selectedCategory !== 'all') && (
                   <button
                     onClick={() => { setSelectedTag(''); setSelectedCategory('all'); setPage(1); }}
-                    className="mt-3 text-xs text-primary hover:text-primary/80 font-medium flex items-center gap-1"
+                    className="mt-3 text-xs text-foreground hover:text-muted-foreground font-medium flex items-center gap-1"
                   >
                     <X className="w-3 h-3" /> Clear all filters
                   </button>
@@ -179,13 +179,13 @@ export function BlogListingPage() {
         {(selectedTag || selectedCategory !== 'all') && (
           <div className="flex flex-wrap gap-2 mb-6">
             {selectedCategory !== 'all' && (
-              <span className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
+              <span className="flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-background rounded-full text-xs font-medium">
                 {categories.find(c => c.slug === selectedCategory)?.name}
                 <button onClick={() => handleCategoryChange('all')}><X className="w-3 h-3" /></button>
               </span>
             )}
             {selectedTag && (
-              <span className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
+              <span className="flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-background rounded-full text-xs font-medium">
                 #{selectedTag}
                 <button onClick={() => handleTagSelect(selectedTag)}><X className="w-3 h-3" /></button>
               </span>
@@ -199,7 +199,7 @@ export function BlogListingPage() {
             <div className="text-5xl mb-4">🔍</div>
             <h3
               className="text-foreground mb-2"
-              style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
+              style={{ fontFamily: "'Times New Roman', Georgia, serif", fontWeight: 700 }}
             >
               No articles found
             </h3>
