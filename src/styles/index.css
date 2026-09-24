@@ -1,3 +1,123 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* Monochrome MDX Article Styles */
+.article-body h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.article-body h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-body h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-body p {
+  color: #374151;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.article-body blockquote {
+  border-left: 2px solid #000000;
+  background-color: #FAFAFA;
+  padding: 0.75rem 1rem;
+  margin: 1.5rem 0;
+  font-style: normal;
+  color: #4B5563;
+}
+
+.article-body blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.article-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.article-body pre {
+  background-color: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: #111827;
+}
+
+.article-body code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.8125rem;
+  background-color: #F3F4F6;
+  color: #111827;
+  padding: 0.15rem 0.35rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 0;
+}
+
+.article-body pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border: none;
+  font-size: inherit;
+}
+
+.article-body ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+  margin: 1.25rem 0;
+  color: #374151;
+}
+
+.article-body ol {
+  list-style-type: decimal;
+  padding-left: 1.25rem;
+  margin: 1.25rem 0;
+  color: #374151;
+}
+
+.article-body li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.article-body a {
+  color: #000000;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: #D1D5DB;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.article-body a:hover {
+  text-decoration-color: #000000;
+}
+
+.article-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}

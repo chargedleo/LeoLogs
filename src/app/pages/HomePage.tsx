@@ -1,226 +1,228 @@
-import type { ElementType } from 'react';
 import { Link } from 'react-router';
-import { motion } from 'motion/react';
-import { ArrowRight, Zap, BookOpen, Cpu, Code2, Globe, User, PenLine, Hash } from 'lucide-react';
-import { BlogCard, FeaturedCard } from '../components/BlogCard';
-import { articles, categories, authors, getAuthor } from '../data/mockData';
-
-const HEADING_FONT = "'Times New Roman', Georgia, serif";
-
-const categoryIcons: Record<string, ElementType> = {
-  'artificial-intelligence': Cpu,
-  'programming': Code2,
-  'technology': Zap,
-  'machine-learning': Hash,
-  'personal': PenLine,
-  'open-source': Globe,
-  'web-development': Globe,
-  'ethics': BookOpen,
-};
-
-function SectionHeader({ tag, title, subtitle }: { tag: string; title: string; subtitle?: string }) {
-  return (
-    <div className="mb-10">
-      <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3 block">
-        {tag}
-      </span>
-      <h2
-        className="text-foreground"
-        style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}
-      >
-        {title}
-      </h2>
-      {subtitle && <p className="text-muted-foreground mt-2 max-w-xl text-sm">{subtitle}</p>}
-    </div>
-  );
-}
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { projects } from '../data/projects';
+import { getAllArticles } from '../data/articles';
 
 export function HomePage() {
-  const featured = articles.find(a => a.isFeatured) || articles[0];
-  const latest = articles.filter(a => !a.isFeatured).slice(0, 6);
-  const trending = articles.filter(a => a.isTrending).slice(0, 4);
-  const mainAuthor = authors[0];
+  const articles = getAllArticles().slice(0, 2);
+  const featuredProjects = projects.filter((p) => !p.isPlaceholder).slice(0, 2);
 
   return (
-    <div className="min-h-screen bg-background">
-
-      {/* Hero */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <FeaturedCard article={featured} />
-        </motion.div>
-      </section>
-
-      {/* Latest Posts */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="flex items-end justify-between mb-10">
-          <SectionHeader tag="Fresh off the press" title="Latest Articles" />
-          <Link
-            to="/articles"
-            className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors group"
-          >
-            View all
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {latest.map((article, i) => (
-            <motion.div
-              key={article.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.07 }}
-            >
-              <BlogCard article={article} />
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="text-center mt-10 sm:hidden">
-          <Link to="/articles">
-            <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border text-sm font-medium text-foreground hover:bg-muted transition-colors">
-              View all articles <ArrowRight className="w-4 h-4" />
-            </button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <SectionHeader tag="Find your focus" title="Browse by Category" subtitle="From AI research to career reflections — pick the topics that matter to you." />
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {categories.map((cat, i) => {
-            const Icon = categoryIcons[cat.slug] || BookOpen;
-            return (
-              <motion.div
-                key={cat.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: i * 0.05 }}
-              >
-                <Link
-                  to={`/articles?category=${cat.slug}`}
-                  className="group flex flex-col gap-3 p-5 bg-card border border-border rounded-2xl hover:border-foreground/30 hover:shadow-md hover:shadow-foreground/5 transition-all duration-200"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-lg">
-                    {cat.icon}
-                  </div>
-                  <div>
-                    <h3
-                      className="text-foreground group-hover:text-foreground/70 transition-colors mb-0.5"
-                      style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.875rem' }}
-                    >
-                      {cat.name}
-                    </h3>
-                    <p className="text-xs text-muted-foreground">{cat.count} articles</p>
-                  </div>
-                </Link>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Trending + Author sidebar */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <SectionHeader tag="What's hot" title="Trending Now" />
-            <div className="space-y-1">
-              {trending.map((article, i) => (
-                <motion.div
-                  key={article.id}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.35, delay: i * 0.08 }}
-                >
-                  <Link
-                    to={`/articles/${article.slug}`}
-                    className="group flex items-start gap-5 py-5 border-b border-border hover:bg-muted/50 -mx-4 px-4 rounded-xl transition-colors"
-                  >
-                    <span
-                      className="text-5xl font-black shrink-0 select-none leading-none mt-1"
-                      style={{
-                        fontFamily: "'Times New Roman', Georgia, serif",
-                        color: 'var(--border)',
-                      }}
-                    >
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <span className="text-xs font-medium text-muted-foreground mb-1 block">
-                        {categories.find(c => c.id === article.categoryId)?.name}
-                      </span>
-                      <h3
-                        className="text-foreground group-hover:text-foreground/70 transition-colors mb-1 line-clamp-2"
-                        style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1rem', lineHeight: 1.35 }}
-                      >
-                        {article.title}
-                      </h3>
-                      <p className="text-xs text-muted-foreground flex items-center gap-2">
-                        <span>{getAuthor(article.authorId).name}</span>
-                        <span>·</span>
-                        <span>{article.readingTime} min read</span>
-                      </p>
-                    </div>
-                    <img
-                      src={article.coverImage}
-                      alt={article.title}
-                      className="w-20 h-16 rounded-xl object-cover shrink-0 hidden sm:block"
-                    />
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
+    <div className="w-full">
+      {/* Hero Section */}
+      <section className="max-w-5xl mx-auto px-6 pt-20 pb-16 md:pt-28 md:pb-24 border-b border-border">
+        <div className="max-w-3xl space-y-6">
+          {/* Status badge - technical, plain */}
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-neutral-600 bg-neutral-100 border border-neutral-200 px-2.5 py-1 rounded-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+            <span>Available for AI/ML engineering roles</span>
           </div>
 
-          {/* Author sidebar */}
-          <div>
-            <SectionHeader tag="About the author" title="Who writes here" />
-            <div className="bg-card border border-border rounded-2xl p-6 sticky top-24">
-              <img
-                src={mainAuthor.avatar}
-                alt={mainAuthor.name}
-                className="w-16 h-16 rounded-2xl object-cover mb-4"
-              />
-              <h3
-                className="text-foreground mb-1"
-                style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '1.1rem' }}
-              >
-                {mainAuthor.name}
-              </h3>
-              <p className="text-sm text-muted-foreground font-medium mb-3">{mainAuthor.role}</p>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-5">{mainAuthor.bio}</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-[1.12]">
+            Om Karmuse — AI/ML Developer building NLP &amp; LLM systems that hold up in production.
+          </h1>
 
-              <Link
-                to={`/authors/${mainAuthor.slug}`}
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-border text-sm font-medium text-foreground hover:bg-muted transition-colors"
+          <p className="text-base sm:text-lg text-neutral-600 leading-relaxed max-w-2xl font-normal">
+            Specialized in retrieval-augmented generation (RAG), LangChain orchestration, vector search latency optimization, and deploying quantized local models that deliver deterministic performance.
+          </p>
+
+          {/* Primary CTA Buttons & Direct Links */}
+          <div className="pt-2 flex flex-wrap items-center gap-3">
+            {/* Primary CTA: Solid black button with white text */}
+            <Link
+              to="/projects"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white text-sm font-medium rounded-sm hover:bg-neutral-800 transition-colors"
+            >
+              <span>View Projects</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+
+            {/* Secondary Action: Read Articles */}
+            <Link
+              to="/articles"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-neutral-100 text-foreground text-sm font-medium rounded-sm border border-neutral-200 hover:bg-neutral-200 transition-colors"
+            >
+              <span>Read Articles</span>
+            </Link>
+
+            {/* Plain text link connectors */}
+            <div className="flex items-center gap-4 text-xs font-medium text-neutral-600 pl-2 pt-1 sm:pt-0">
+              <a
+                href="https://github.com/chargedleo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-0.5 hover:text-black transition-colors underline underline-offset-4 decoration-neutral-300"
               >
-                <User className="w-4 h-4" />
-                View Profile
+                <span>GitHub</span>
+                <ArrowUpRight className="w-3 h-3 opacity-60" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/omkarmuse"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-0.5 hover:text-black transition-colors underline underline-offset-4 decoration-neutral-300"
+              >
+                <span>LinkedIn</span>
+                <ArrowUpRight className="w-3 h-3 opacity-60" />
+              </a>
+              <a
+                href="mailto:omkarmuse@gmail.com"
+                className="inline-flex items-center gap-0.5 hover:text-black transition-colors underline underline-offset-4 decoration-neutral-300"
+              >
+                <span>Email</span>
+                <ArrowUpRight className="w-3 h-3 opacity-60" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Currently & About Teaser Grid */}
+      <section className="max-w-5xl mx-auto px-6 py-14 border-b border-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+          {/* Currently */}
+          <div className="space-y-3">
+            <h2 className="text-xs font-mono font-semibold uppercase tracking-wider text-neutral-500">
+              Currently
+            </h2>
+            <p className="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              Evaluating local inference latency across DeepSeek reasoning checkpoints, building reproducible Dockerized RAG pipelines with FAISS, and experimenting with deterministic state simulation in game development.
+            </p>
+          </div>
+
+          {/* About Teaser */}
+          <div className="space-y-3">
+            <h2 className="text-xs font-mono font-semibold uppercase tracking-wider text-neutral-500">
+              Background
+            </h2>
+            <p className="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              B.Tech in Artificial Intelligence &amp; Data Science from VIIT Pune (CPI 7.95). Former software engineering intern at Byline Learning Solutions, focused on systems that prioritize accuracy and measurable latency over hype.
+            </p>
+            <div>
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-black hover:opacity-70 transition-opacity"
+              >
+                <span>Read full background</span>
+                <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Tags */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <SectionHeader tag="Explore" title="Popular Topics" />
-        <div className="flex flex-wrap gap-2">
-          {['LLMs', 'Python', 'TypeScript', 'React', 'Transformers', 'RAG', 'Vector DB', 'Neural Networks', 'GPT', 'Fine-tuning', 'DevOps', 'Kubernetes', 'Open Source', 'Career', 'Writing', 'Rust', 'Embeddings', 'RLHF', 'Alignment', 'Inference', 'Prompting'].map(tag => (
-            <Link
-              key={tag}
-              to={`/articles?tag=${tag}`}
-              className="px-4 py-2 bg-card border border-border rounded-full text-sm text-muted-foreground hover:text-foreground hover:border-foreground/30 hover:bg-muted transition-all duration-150"
+      {/* Featured Projects Teaser */}
+      <section className="max-w-5xl mx-auto px-6 py-16 border-b border-border">
+        <div className="flex items-baseline justify-between mb-8">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+              Featured Systems
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-500 mt-1">
+              Production architectures evaluated against real latency and accuracy benchmarks.
+            </p>
+          </div>
+          <Link
+            to="/projects"
+            className="text-xs font-semibold text-neutral-700 hover:text-black inline-flex items-center gap-1 transition-colors"
+          >
+            <span>All projects</span>
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+
+        <div className="space-y-6">
+          {featuredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="p-6 md:p-7 border border-border bg-white rounded-xs hover:border-black transition-colors"
             >
-              {tag}
+              <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-3">
+                <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                  {project.title}
+                </h3>
+                {project.metrics && (
+                  <span className="text-xs font-mono text-neutral-600 bg-neutral-100 px-2 py-0.5 rounded-xs w-fit">
+                    {project.metrics}
+                  </span>
+                )}
+              </div>
+
+              <p className="text-sm text-neutral-600 leading-relaxed mb-4">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-neutral-100">
+                <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs font-mono text-neutral-500">
+                  {project.stack.map((tech) => (
+                    <span key={tech} className="after:content-['·'] last:after:content-none after:ml-3">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {project.links.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-medium text-black hover:opacity-70 transition-opacity"
+                  >
+                    <span>{link.label}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Recent Writing Teaser */}
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <div className="flex items-baseline justify-between mb-8">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+              Technical Writing
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-500 mt-1">
+              Field notes, architecture breakdowns, and engineering perspectives.
+            </p>
+          </div>
+          <Link
+            to="/articles"
+            className="text-xs font-semibold text-neutral-700 hover:text-black inline-flex items-center gap-1 transition-colors"
+          >
+            <span>All articles</span>
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+
+        <div className="divide-y divide-border">
+          {articles.map((article) => (
+            <Link
+              key={article.slug}
+              to={`/articles/${article.slug}`}
+              className="group block py-6 hover:bg-neutral-50/60 -mx-4 px-4 transition-colors rounded-xs"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2">
+                <h3 className="text-base font-semibold tracking-tight text-foreground group-hover:underline underline-offset-4 decoration-neutral-400">
+                  {article.frontmatter.title}
+                </h3>
+                <div className="flex items-center gap-3 text-xs font-mono text-neutral-500 shrink-0">
+                  <span>{article.frontmatter.date}</span>
+                  {article.frontmatter.readTime && (
+                    <>
+                      <span>·</span>
+                      <span>{article.frontmatter.readTime}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+              <p className="text-sm text-neutral-600 line-clamp-2 leading-relaxed">
+                {article.frontmatter.excerpt}
+              </p>
             </Link>
           ))}
         </div>

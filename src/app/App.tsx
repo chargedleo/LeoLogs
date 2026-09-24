@@ -1,15 +1,16 @@
-import { BrowserRouter, Routes, Route } from 'react-router';
+import { BrowserRouter, Routes, Route, Link } from 'react-router';
 import { ThemeProvider } from 'next-themes';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
-import { BlogListingPage } from './pages/BlogListingPage';
-import { ArticlePage } from './pages/ArticlePage';
-import { AuthorProfilePage } from './pages/AuthorProfilePage';
+import { ProjectsPage } from './pages/ProjectsPage';
+import { ArticlesListingPage } from './pages/ArticlesListingPage';
+import { ArticleDetailPage } from './pages/ArticleDetailPage';
+import { AboutPage } from './pages/AboutPage';
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col selection:bg-neutral-200">
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
@@ -19,13 +20,14 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} forcedTheme="light">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout><HomePage /></Layout>} />
-          <Route path="/articles" element={<Layout><BlogListingPage /></Layout>} />
-          <Route path="/articles/:slug" element={<Layout><ArticlePage /></Layout>} />
-          <Route path="/authors/:slug" element={<Layout><AuthorProfilePage /></Layout>} />
+          <Route path="/projects" element={<Layout><ProjectsPage /></Layout>} />
+          <Route path="/articles" element={<Layout><ArticlesListingPage /></Layout>} />
+          <Route path="/articles/:slug" element={<Layout><ArticleDetailPage /></Layout>} />
+          <Route path="/about" element={<Layout><AboutPage /></Layout>} />
           <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
       </BrowserRouter>
@@ -35,28 +37,24 @@ export default function App() {
 
 function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center py-32 px-4 text-center">
-      <p
-        className="text-primary mb-4"
-        style={{ fontFamily: "'Times New Roman', Georgia, serif", fontWeight: 700, fontSize: '6rem', lineHeight: 1 }}
-      >
-        404
+    <div className="flex flex-col items-center justify-center py-32 px-6 text-center space-y-4">
+      <p className="text-xs font-mono uppercase tracking-wider text-neutral-400">
+        Error 404
       </p>
-      <h1
-        className="text-foreground mb-3"
-        style={{ fontFamily: "'Times New Roman', Georgia, serif", fontWeight: 700, fontSize: '1.75rem' }}
-      >
-        Page not found
+      <h1 className="text-4xl font-bold tracking-tight text-foreground">
+        Page Not Found
       </h1>
-      <p className="text-muted-foreground mb-8 max-w-sm">
-        The page you're looking for doesn't exist or has been moved.
+      <p className="text-sm text-neutral-600 max-w-sm">
+        The route you followed does not exist or has been restructured.
       </p>
-      <a
-        href="/"
-        className="px-6 py-3 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors"
-      >
-        Go home
-      </a>
+      <div className="pt-2">
+        <Link
+          to="/"
+          className="inline-flex items-center px-5 py-2.5 bg-black text-white text-xs font-medium hover:bg-neutral-800 transition-colors"
+        >
+          Return to home
+        </Link>
+      </div>
     </div>
   );
 }

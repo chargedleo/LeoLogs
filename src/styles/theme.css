@@ -2,43 +2,43 @@
 
 :root {
   --font-size: 16px;
-  --background: #F8F8F8;
-  --foreground: #0A0A0A;
+  --background: #FFFFFF;
+  --foreground: #09090B;
   --card: #FFFFFF;
-  --card-foreground: #0A0A0A;
+  --card-foreground: #09090B;
   --popover: #FFFFFF;
-  --popover-foreground: #0A0A0A;
-  --primary: #0A0A0A;
+  --popover-foreground: #09090B;
+  --primary: #09090B;
   --primary-foreground: #FFFFFF;
-  --secondary: #F0F0F0;
-  --secondary-foreground: #3D3D3D;
-  --muted: #F4F4F4;
-  --muted-foreground: #717171;
-  --accent: #EBEBEB;
-  --accent-foreground: #0A0A0A;
+  --secondary: #F4F4F5;
+  --secondary-foreground: #18181B;
+  --muted: #F4F4F5;
+  --muted-foreground: #71717A;
+  --accent: #F4F4F5;
+  --accent-foreground: #09090B;
   --destructive: #DC2626;
   --destructive-foreground: #FFFFFF;
-  --border: #E3E3E3;
-  --input: transparent;
-  --input-background: #F4F4F4;
-  --switch-background: #C8C8C8;
+  --border: #E4E4E7;
+  --input: #E4E4E7;
+  --input-background: #FAFAFA;
+  --switch-background: #D4D4D8;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #0A0A0A;
-  --chart-1: #0A0A0A;
-  --chart-2: #525252;
-  --chart-3: #3D3D3D;
-  --chart-4: #717171;
-  --chart-5: #A3A3A3;
-  --radius: 0.875rem;
+  --ring: #09090B;
+  --chart-1: #09090B;
+  --chart-2: #52525B;
+  --chart-3: #3F3F46;
+  --chart-4: #71717A;
+  --chart-5: #A1A1AA;
+  --radius: 0.375rem;
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #0A0A0A;
-  --sidebar-primary: #0A0A0A;
+  --sidebar-foreground: #09090B;
+  --sidebar-primary: #09090B;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #EBEBEB;
-  --sidebar-accent-foreground: #0A0A0A;
-  --sidebar-border: #E3E3E3;
-  --sidebar-ring: #0A0A0A;
+  --sidebar-accent: #F4F4F5;
+  --sidebar-accent-foreground: #09090B;
+  --sidebar-border: #E4E4E7;
+  --sidebar-ring: #09090B;
 }
 
 .dark {
@@ -139,16 +139,17 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Times New Roman', Georgia, serif;
-    font-weight: 700;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: var(--foreground);
   }
 
   h1 { font-size: 2.25rem; }
-  h2 { font-size: 1.75rem; }
-  h3 { font-size: 1.375rem; }
-  h4 { font-size: 1.125rem; }
+  h2 { font-size: 1.625rem; }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1rem; }
 
   code, pre {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;

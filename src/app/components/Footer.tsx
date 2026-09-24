@@ -1,85 +1,74 @@
 import { Link } from 'react-router';
-import { Feather, Twitter, Github, Linkedin, Rss } from 'lucide-react';
-
-const contentLinks = [
-  { label: 'All Articles', href: '/articles' },
-  { label: 'Artificial Intelligence', href: '/articles?category=artificial-intelligence' },
-  { label: 'Programming', href: '/articles?category=programming' },
-  { label: 'Machine Learning', href: '/articles?category=machine-learning' },
-  { label: 'Technology', href: '/articles?category=technology' },
-  { label: 'Web Development', href: '/articles?category=web-development' },
-];
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card mt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {/* Brand */}
-          <div>
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-md bg-foreground flex items-center justify-center">
-                <Feather className="w-3.5 h-3.5 text-background" />
-              </div>
-              <span
-                className="text-foreground"
-                style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 700, fontSize: '1.05rem', letterSpacing: '0.01em' }}
-              >
-                LeoLogs
-              </span>
-            </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-xs">
-              Long-form writing at the intersection of AI, engineering, and technology. Published by engineers, for engineers.
+    <footer className="w-full border-t border-border bg-white mt-auto">
+      <div className="max-w-5xl mx-auto px-6 py-12">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-8">
+          {/* Identity & Stance */}
+          <div className="space-y-2 max-w-sm">
+            <p className="text-sm font-semibold tracking-tight text-foreground">
+              Om Karmuse
             </p>
-            <div className="flex items-center gap-2.5">
-              {[
-                { icon: Twitter, href: '#', label: 'Twitter' },
-                { icon: Github, href: '#', label: 'GitHub' },
-                { icon: Linkedin, href: '#', label: 'LinkedIn' },
-                { icon: Rss, href: '#', label: 'RSS' },
-              ].map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="w-8 h-8 rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-all duration-200"
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                </a>
-              ))}
-            </div>
+            <p className="text-xs text-neutral-500 leading-relaxed">
+              AI/ML developer building production NLP &amp; LLM retrieval architectures. 
+              B.Tech in AI &amp; Data Science (VIIT Pune).
+            </p>
           </div>
 
-          {/* Content links */}
-          <div>
-            <h3
-              className="text-foreground mb-4"
-              style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.75rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}
+          {/* Navigation Links */}
+          <div className="flex flex-col space-y-2 text-xs">
+            <span className="font-semibold text-foreground uppercase tracking-wider text-[11px]">
+              Pages
+            </span>
+            <Link to="/" className="text-neutral-500 hover:text-foreground transition-colors">
+              Home
+            </Link>
+            <Link to="/projects" className="text-neutral-500 hover:text-foreground transition-colors">
+              Projects
+            </Link>
+            <Link to="/articles" className="text-neutral-500 hover:text-foreground transition-colors">
+              Articles
+            </Link>
+            <Link to="/about" className="text-neutral-500 hover:text-foreground transition-colors">
+              About
+            </Link>
+          </div>
+
+          {/* Social / Direct Links - Plain text links, NOT icon bubbles */}
+          <div className="flex flex-col space-y-2 text-xs">
+            <span className="font-semibold text-foreground uppercase tracking-wider text-[11px]">
+              Connect
+            </span>
+            <a
+              href="mailto:omkarmuse@gmail.com"
+              className="text-neutral-500 hover:text-foreground underline underline-offset-4 decoration-neutral-300 hover:decoration-black transition-colors"
             >
-              Content
-            </h3>
-            <ul className="space-y-2">
-              {contentLinks.map(link => (
-                <li key={link.label}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+              Email (omkarmuse@gmail.com)
+            </a>
+            <a
+              href="https://github.com/chargedleo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 hover:text-foreground underline underline-offset-4 decoration-neutral-300 hover:decoration-black transition-colors"
+            >
+              GitHub (chargedleo)
+            </a>
+            <a
+              href="https://www.linkedin.com/in/omkarmuse"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 hover:text-foreground underline underline-offset-4 decoration-neutral-300 hover:decoration-black transition-colors"
+            >
+              LinkedIn (omkarmuse)
+            </a>
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-muted-foreground">
-            © 2026 LeoLogs. All rights reserved.
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Built for the developer community.
-          </p>
+        {/* Bottom line */}
+        <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
+          <p>© {new Date().getFullYear()} Om Karmuse. All rights reserved.</p>
+          <p className="font-mono text-[11px]">Static build · No tracking · Zero backend</p>
         </div>
       </div>
     </footer>

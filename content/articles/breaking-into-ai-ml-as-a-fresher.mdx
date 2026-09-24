@@ -1,0 +1,68 @@
+---
+title: "Breaking Into AI/ML as an Undergraduate: What Actually Works"
+date: "2026-02-18"
+excerpt: "A candid perspective on moving beyond surface-level tutorials to build verifiable systems, understand latency-accuracy tradeoffs, and demonstrate real engineering rigor."
+slug: "breaking-into-ai-ml-as-a-fresher"
+readTime: "5 min read"
+---
+
+> **[PLACEHOLDER — replace with real writing]**  
+> *This article serves as an essay placeholder sharing practical lessons learned as a B.Tech AI & Data Science student transitioning into production-oriented engineering.*
+
+## Beyond the "Tutorial Trap"
+
+Most beginner machine learning roadmaps recommend following standard notebooks: downloading MNIST, fine-tuning a small model with three lines of boilerplate, or running an off-the-shelf API wrapper. 
+
+While helpful for introductory syntax, these exercises fail to answer the questions that define production engineering:
+
+- What is your system's p99 latency under concurrent load?
+- How much GPU VRAM does the model consume during peak batching?
+- What happens when input documents contain corrupted encodings or unsupported schemas?
+- How do you measure hallucination rate systematically rather than "vibe checking"?
+
+## The Value of Systems Thinking
+
+In industry contexts, model weights are rarely the bottleneck. The engineering challenges lie in the surrounding pipeline:
+
+```text
+┌────────────────────────────────────────────────────────┐
+│ The Real AI/ML Engineering Surface Area               │
+│                                                        │
+│  [Data Parsing & Ingestion]                            │
+│         │                                              │
+│         ▼                                              │
+│  [Tokenization / Chunking / Embedding]                 │
+│         │                                              │
+│         ▼                                              │
+│  [Vector Store / Retrieval Cache]                      │
+│         │                                              │
+│         ▼                                              │
+│  [Quantization (AWQ/GGUF) & Inference Orchestration]   │
+│         │                                              │
+│         ▼                                              │
+│  [Streaming Response Serialization (SSE / WebSockets)] │
+│         │                                              │
+│         ▼                                              │
+│  [Automated Guardrails & Telemetry Logging]            │
+└────────────────────────────────────────────────────────┘
+```
+
+When you understand how quantization reduces memory bandwidth pressure (e.g. running 4-bit DeepSeek R1 models with Ollama locally), you transition from an API consumer to an engineer who can optimize hardware utilization.
+
+## 3 Principles for Demonstrating Proof-of-Work
+
+### 1. Build with Quantitative Benchmarks
+Never write a portfolio entry that only states *"Built a chatbot"*. Instead, state:
+> *"Achieved 92% answer relevance across 400+ test queries while lowering p95 latency to under 850ms on a single GPU instance."*
+
+Numbers provide credibility. They prove you tested your system rigorously against edge cases.
+
+### 2. Own the Full Containerized Stack
+Package your applications cleanly. If an interviewer or collaborator cannot spin up your system with `docker compose up`, your project is effectively invisible. Document environment variables, resource requirements, and endpoints clearly.
+
+### 3. Write Technical Dissections
+Document what broke and why you made specific architectural compromises. Choosing FAISS over Milvus or Pinecone for an embedded local workload demonstrates intentional system design rather than arbitrary tool picking.
+
+## Looking Forward
+
+The gap between hype and production AI is wide. Bridging it requires discipline, benchmark-driven validation, and clean software fundamentals.
